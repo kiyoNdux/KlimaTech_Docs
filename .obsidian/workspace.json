@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "789eeca312684fdc",
+        "id": "72afc5d1b2bc8907",
         "type": "tabs",
         "children": [
           {
-            "id": "9f7c83852f6c8cae",
+            "id": "6d1f0c79dbd9e049",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -162,14 +162,20 @@
       "bases:Create new base": false
     }
   },
-  "active": "9f7c83852f6c8cae",
+  "active": "6d1f0c79dbd9e049",
   "lastOpenFiles": [
-    "app/routers/barangays.py/`get_barangay` Endpoint.md",
+    "app/db.py.md",
+    "app/main.py.md",
+    "app/models.py.md",
+    "app/scripts/add_barangays.py.md",
     "app/schemas/barangay.py.md",
-    "Structure (Latest).md",
     "app/utils/heat_index.py.md",
-    "app/utils",
+    "Structure (Latest).md",
+    "README.md",
+    "app/scripts",
     "app/routers/barangays.py/`get_barangays` Endpoint.md",
+    "app/routers/barangays.py/`get_barangay` Endpoint.md",
+    "app/utils",
     "app/routers/barangays.py",
     "app/schemas",
     "app",

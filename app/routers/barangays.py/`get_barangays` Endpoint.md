@@ -25,7 +25,7 @@ This endpoint fetches temperature and humidity data from the [Open-Meteo API](ht
 
 ### Process
 
-1. Loops over the static `barangays_data` list.
+1. Loops over the static `barangays_data` list from the database.
 2. For each barangay:
     - Sends a request to the **Open-Meteo API** to get current weather data.
     - Extracts:

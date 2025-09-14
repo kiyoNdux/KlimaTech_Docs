@@ -37,7 +37,7 @@ If no barangay is found with the given `barangay_id`, the endpoint returns:
 
 ### Process
 
-1. Search for the barangay in `barangays_data` using the given `barangay_id`.
+1. Search for the barangay in `barangays_data` using the given `barangay_id` from the database.
 2. If found:
     - Request current weather data from **Open-Meteo API**.
     - Extract:
