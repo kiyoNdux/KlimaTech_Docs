@@ -1,54 +1,95 @@
-## `Environment Variables`
+## **Overview**
 
-Loaded via **`python-dotenv`** (`load_dotenv()`), the following variables must be defined in your `.env` file:
+This file manages **database configuration and connections** for the project.  
+It supports **two environments**:
 
-- `DB_USER` – Database username
-- `DB_PASSWORD` – Database password
-- `DB_HOST` – Database host (e.g., `localhost`)
-- `DB_PORT` – Database port (e.g., `5432`)
-- `DB_NAME` – Database name
+- **Development (`dev`)** – Uses **SQLite** (local database).
+- **Production (`prod`)** – Uses **PostgreSQL** (with credentials from environment variables).
 
----
+It also provides utilities for:
 
-### Database URL
-
-```python
-DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-```
-
-Constructs the PostgreSQL connection string dynamically from environment variables.
-
-
-### Engine
-
-```python
-engine = create_engine(DATABASE_URL, echo=True)
-```
-
-- Creates the SQLModel engine for database interaction.
-- `echo=True` enables SQL logging (prints all SQL statements to the console).
+- **Initializing the database schema** (`init_db`)
+- **Providing a session generator** (`get_session`)
 
 ---
 
-### Functions
+## **Dependencies**
 
-#### `init_db()`
+- **`os`** – Access environment variables.
+- **`sqlmodel`** – ORM and database engine handling (`SQLModel`, `create_engine`, `Session`).
+- **`dotenv`** – Loads environment variables from `.env` file.
 
-```python
-def init_db():
-    SQLModel.metadata.create_all(engine)
+---
+
+## **Environment Setup**
+
+- Environment variable:
+    - `ENV` – Determines environment mode (`dev` or `prod`). Defaults to `"dev"`.
+- For **production (`prod`)**, the following variables must be set in `.env`:
+    - `DB_USER`
+    - `DB_PASSWORD`
+    - `DB_HOST`
+    - `DB_PORT`
+    - `DB_NAME`
+
+---
+
+## **Configuration**
+
+- **Development (`dev`)**
+    - Database: SQLite
+    - Path: `./heat_project.db`
+    - Engine: `create_engine(DATABASE_URL, echo=True)`
+
+- **Production (`prod`)**
+    - Database: PostgreSQL
+    - URL built dynamically from `.env` credentials
+    - Example:
+
+ ```
+ postgresql://user:password@localhost:5432/mydb
 ```
 
-- Initializes the database schema by creating all tables defined in your SQLModel models.
-- Should be run at application startup or migrations.
 
-#### `get_session()`
+---
+
+## **Functions**
+
+### **`init_db()`**
+
+Initializes the database by creating tables defined in `SQLModel` models.
+
+**Usage:**
 
 ```python
-def get_session():
-    with Session(engine) as session:
-        yield session
+from db import init_db
+init_db()
 ```
 
-- Provides a database session for use in dependency injection (e.g., in FastAPI routes).
-- Uses `yield` to ensure the session is properly closed after use.
+
+### **`get_session()`**
+
+Generator function that yields a **database session**.  
+Ensures proper session management using context handling.
+
+**Usage (FastAPI dependency example):**
+
+```python
+from fastapi import Depends
+from sqlmodel import Session
+from db import get_session
+
+@app.get("/items/")
+def get_items(session: Session = Depends(get_session)):
+    result = session.exec(select(Item)).all()
+    return result
+```
+
+
+---
+
+## **Notes**
+
+- **`echo=True`** enables SQL query logging for debugging (turn off in production for performance).
+- `get_session` is a generator designed to integrate smoothly with **FastAPI’s dependency injection** system.
+- Switching between SQLite and PostgreSQL is controlled only by the `ENV` variable.
