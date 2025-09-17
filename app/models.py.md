@@ -1,4 +1,29 @@
-## `Barangay`
+## **Overview**
+
+This file defines the **database models** for the Heat Risk API using **SQLModel**.  
+It contains two main entities:
+
+- **`Barangay`** – Represents a geographical area (barangay) with coordinates.
+- **`HeatLog`** – Represents recorded heat index data linked to a barangay.
+
+The models use **relationships** for linking `Barangay` and its `HeatLogs`.
+
+---
+
+## **Dependencies**
+
+- **`sqlmodel`**
+    - `SQLModel` – Base class for defining models.
+    - `Field` – Used to declare fields with properties (e.g., primary keys, defaults).
+    - `Relationship` – Defines ORM relationships between models.
+- **`typing`** – Provides type hints (`Optional`, `List`).
+- **`datetime`** – Used to store timestamps for heat log records.
+
+---
+
+## **Models**
+
+### **1. Barangay**
 
 ```python
 class Barangay(SQLModel, table=True):
@@ -9,22 +34,21 @@ class Barangay(SQLModel, table=True):
     heat_logs: List["HeatLog"] = Relationship(back_populates="barangay")
 ```
 
-### Description
+**Fields:**
 
-Represents a **barangay** entity with geographical coordinates.  
-Each barangay can have multiple associated `HeatLog` records.
+- `id`: Primary key (auto-incremented).
+- `name`: Name of the barangay.
+- `lat`: Latitude coordinate.
+- `lon`: Longitude coordinate.
+- `heat_logs`: One-to-many relationship with `HeatLog`.
 
-### Fields
+**Purpose:**  
 
-- `id` _(Optional[int])_ – Primary key, auto-incremented
-- `name` _(str)_ – Name of the barangay
-- `lat` _(float)_ – Latitude
-- `lon` _(float)_ – Longitude
-- `heat_logs` _(List[HeatLog])_ – Relationship to related `HeatLog` entries
+Represents a barangay (local administrative division), storing its location and related weather data logs.
 
 ---
 
-## `HeatLog`
+### **2. HeatLog**
 
 ```python
 class HeatLog(SQLModel, table=True):
@@ -38,41 +62,35 @@ class HeatLog(SQLModel, table=True):
     barangay: Optional["Barangay"] = Relationship(back_populates="heat_logs")
 ```
 
-### Description
+**Fields:**
 
-Stores a **historical record** of heat index calculations for a barangay, including weather conditions and associated risk level.
+- `id`: Primary key (auto-incremented).
+- `barangay_id`: Foreign key linking to a `Barangay`.
+- `temperature_c`: Recorded temperature (°C).
+- `humidity`: Recorded humidity (%).
+- `heat_index_c`: Calculated heat index (°C).
+- `risk_level`: Categorical risk level (e.g., _Safe_, _Caution_, _Danger_).
+- `recorded_at`: Timestamp when the log was recorded (defaults to **current UTC**).
+- `barangay`: Relationship back to the parent `Barangay`.
 
-### Fields
+**Purpose:**  
 
-- `id` _(Optional[int])_ – Primary key, auto-incremented
-- `barangay_id` _(int)_ – Foreign key referencing `Barangay.id`
-- `temperature_c` _(float)_ – Recorded air temperature (°C)
-- `humidity` _(float)_ – Recorded relative humidity (%)
-- `heat_index_c` _(float)_ – Calculated heat index (°C)
-- `risk_level` _(str)_ – Risk category (e.g., _Safe, Caution, Danger_)
-- `recorded_at` _(datetime)_ – UTC timestamp when record was created (default: `datetime.utcnow()`)
-- `barangay` _(Optional[Barangay])_ – Relationship back to the parent barangay
+Stores historical or real-time heat index data associated with a barangay.
 
 ---
 
-## Relationships
+## **Entity Relationship**
 
-- **One-to-Many:**
-    - A `Barangay` → has many `HeatLog` entries
-    - A `HeatLog` → belongs to a single `Barangay`
+- **One Barangay → Many HeatLogs**
+- Each `HeatLog` belongs to exactly **one** `Barangay`.
+- Enables efficient queries such as:
+    - Getting all logs for a specific barangay.
+    - Fetching the most recent log to determine current heat risk.
 
-### ERD (Entity-Relationship Diagram)
+---
 
-```
-+-------------+         +-----------------+
-|  Barangay   |  1 ────>│    HeatLog      |
-+-------------+         +-----------------+
-| id (PK)     |         | id (PK)         |
-| name        |         | barangay_id (FK)|
-| lat         |         | temperature_c   |
-| lon         |         | humidity        |
-| heat_logs[] |         | heat_index_c    |
-+-------------+         | risk_level      |
-                        | recorded_at     |
-                        +-----------------+
-```
+## **Notes**
+
+- Using `default_factory=datetime.utcnow` ensures logs always have a timestamp when inserted.
+- The `Relationship` fields (`barangay` and `heat_logs`) allow **ORM-style navigation** between related records.
+- This schema is **normalized**: logs are stored separately to avoid redundant data in the `Barangay` table.
