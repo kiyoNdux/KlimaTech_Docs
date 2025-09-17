@@ -1,72 +1,62 @@
-## `BarangayBase`
+## **Overview**
 
-```python
-class BarangayBase(BaseModel):
-    id: int
-    name: str
-    lat: float
-    lon: float
-```
-
-### Description
-
-Base schema representing the core information of a barangay.  
-Used as the foundation for summary and detailed responses.
-
-### Fields
-
-- `id` _(int)_ – Unique identifier of the barangay
-- `name` _(str)_ – Barangay name
-- `lat` _(float)_ – Latitude
-- `lon` _(float)_ – Longitude
+These schemas are used in API endpoints to structure both **summary-level** and **detailed** responses for barangays.
 
 ---
 
-## `BarangaySummary`
+## **Classes**
 
-```python
-class BarangaySummary(BarangayBase):
-    heat_index: float
-    risk_level: str
-    updated_at: datetime
-```
+### **`BarangayBase`**
 
-### Description
+Base schema representing the common attributes of a barangay.
 
-Extended schema for **summary views** of barangays, used in listing endpoints.  
-Includes heat-related data alongside base attributes.
+**Fields:**
 
-### Fields
+- `id` _(int)_ → Unique identifier for the barangay.
+- `name` _(str)_ → Name of the barangay.
+- `lat` _(float)_ → Latitude coordinate.
+- `lon` _(float)_ → Longitude coordinate.
 
-- **Inherited from `BarangayBase`**
-    - `id`, `name`, `lat`, `lon`
-- **Additional**
-    - `heat_index` _(float)_ – Calculated heat index value
-    - `risk_level` _(str)_ – Heat risk category (e.g., _Low, Moderate, High_)
-    - `updated_at` _(datetime)_ – Timestamp of last weather data update
+**Usage:**
+
+- Serves as the base class for other schemas (`BarangaySummary`, `BarangayDetail`).
 
 ---
 
-## `BarangayDetail`
+### **`BarangaySummary`** _(extends `BarangayBase`)_
 
-```python
-class BarangayDetail(BarangayBase): 
-    current: dict
-    daily_briefing: dict
-    forecast: Optional[list] = None
-```
+Schema for returning summarized information about a barangay, including its latest heat risk status.
 
-### Description
+**Additional Fields:**
 
-Detailed schema for **single barangay responses**, providing current weather, safety guidance, and (future) forecast data.
+- `heat_index` _(float)_ → Most recent computed heat index (in Celsius).
+- `risk_level` _(str)_ → Heat risk category (e.g., _Safe, Caution, Danger_).
+- `updated_at` _(datetime)_ → Timestamp when the data was last updated.
 
-### Fields
+**Usage:**
 
-- **Inherited from `BarangayBase`**
-    - `id`, `name`, `lat`, `lon`
-- **Additional**
-    - `current` _(dict)_ – Current weather and heat risk data
-        - Expected keys: `temperature`, `humidity`, `heat_index`, `risk_level`, `updated_at`
-    - `daily_briefing` _(dict)_ – Health and safety recommendations
-        - Example keys: `safe_hours`, `avoid_hours`, `advice`
-    - `forecast` _(Optional[list])_ – Future weather/heat index forecasts (currently unused; defaults to `None`)
+- Returned by the `/barangays/all` endpoint to list multiple barangays with their heat risk summaries.
+
+---
+
+### **`BarangayDetail`** _(extends `BarangayBase`)_
+
+Schema for returning detailed information about a specific barangay.
+
+**Additional Fields:**
+
+- `current` _(dict)_ → Current conditions (temperature, humidity, heat index, risk level, last update).
+- `daily_briefing` _(dict)_ → Advice and guidelines for safe/unsafe hours.
+- `forecast` _(Optional[list])_ → Placeholder for future forecast data (currently empty).
+
+**Usage:**
+
+- Returned by the `/barangays/{barangay_id}` endpoint to provide a full barangay report.
+
+---
+
+## **How it fits in the project**
+
+- Used in `routers/barangays.py` to serialize and validate API responses.
+- Ensures consistency between what the backend provides and what the client expects.
+- Supports both lightweight summaries (for listings) and detailed views (for individual barangays).
