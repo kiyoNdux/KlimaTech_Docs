@@ -1,38 +1,77 @@
-### `main()`
+## **Overview**
 
-Seeds the database with predefined barangay data.
+This script is a **data population utility** designed to insert predefined barangay records into the database.  
+It connects to the database using `get_session()`, clears existing records in the `barangay` table, and then inserts a set of predefined barangays.
 
-**Steps performed:**
+This script is typically used for:
 
-1. Opens a database session using `get_session()`.
-2. Iterates over the predefined `barangays_data` list.
-3. Creates a new `Barangay` object for each entry.
-4. Adds the object to the session.
-5. Commits the transaction to persist the data.
-6. Prints confirmation (`"Barangays added!"`).
+- Initial seeding of the database with test barangays.
+- Resetting the barangay table to a clean state during development.
 
 ---
 
-### `barangays_data`
+## **Dependencies**
 
-A list of dictionaries containing sample barangay information.  
-Each dictionary includes:
+- **`app.models.Barangay`** – SQLModel ORM model for the `barangay` table.
+- **`app.db.get_session`** – database session generator function.
+- **`sqlalchemy.text`** – used to execute raw SQL (`DELETE FROM barangay`).
 
-- `id`: Unique integer ID.
-- `name`: Barangay name (string).
-- `lat`: Latitude (float).
-- `lon`: Longitude (float).
+---
+
+## **Data: `barangays_data`**
+
+A predefined list of dictionaries containing barangay records.  
+Each record includes:
+
+- `id` _(int)_ – Unique identifier for the barangay.
+- `name` _(str)_ – Full name of the barangay.
+- `lat` _(float)_ – Latitude coordinate.
+- `lon` _(float)_ – Longitude coordinate.
 
 Example:
 
 ```python
-{"id": 1, "name": "Barangay Dalahican, Lucena", "lat": 13.9317, "lon": 121.6233}
+barangays_data = [
+    {"id": 1, "name": "Barangay Ibabang Dupay, Lucena, Quezon", "lat": 13.9405, "lon": 121.617},
+    {"id": 2, "name": "Bgry. Ikirin, Pagbilao, Quezon", "lat": 13.9968, "lon": 121.7309},
+]
 ```
 
 ---
 
-### **Usage in Project**
+## **Functions**
 
-- Run this script manually to populate the `barangay` table with initial data.
-- Helps bootstrap the system with real geographic data for testing or demo purposes.
-- Not intended for production seeding without validation (may cause duplicate key errors if run multiple times).
+### **`main()`**
+
+The entry point of the script.  
+Steps performed:
+
+1. **Create session** – Retrieves a database session from `get_session()`.
+2. **Clear old records** – Executes `DELETE FROM barangay` to remove all existing records.
+3. **Insert barangays** – Iterates over `barangays_data` and creates `Barangay` objects.
+4. **Commit changes** – Saves the new records into the database.
+5. **Confirmation** – Prints `"Barangays added!"` after successful execution.
+
+---
+
+## **Execution**
+
+The script can be run directly from the terminal:
+
+```bash
+python scripts/add_barangays.py
+```
+
+Expected output:
+
+```
+Barangays added!
+```
+
+---
+
+## **Notes**
+
+- Running this script will **delete all existing records** in the `barangay` table before inserting the predefined list.
+- Extend `barangays_data` as needed to add more barangays.
+- Designed for **development and testing**, not production seeding.
