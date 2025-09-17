@@ -11,10 +11,14 @@
             "id": "6d1f0c79dbd9e049",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Structure (Latest).md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Structure (Latest)"
             }
           }
         ]
@@ -164,6 +168,7 @@
   },
   "active": "6d1f0c79dbd9e049",
   "lastOpenFiles": [
+    "README.md",
     "app/db.py.md",
     "app/main.py.md",
     "app/models.py.md",
@@ -171,7 +176,6 @@
     "app/schemas/barangay.py.md",
     "app/utils/heat_index.py.md",
     "Structure (Latest).md",
-    "README.md",
     "app/scripts",
     "app/routers/barangays.py/`get_barangays` Endpoint.md",
     "app/routers/barangays.py/`get_barangay` Endpoint.md",
