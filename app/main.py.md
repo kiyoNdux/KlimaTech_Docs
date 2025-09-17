@@ -1,48 +1,47 @@
-## `Code Overview`
+## **Overview**
+
+This is the **entry point** of the FastAPI application.  
+It:
+
+- Initializes the **FastAPI app instance**
+- Includes the **Barangays router** for handling API endpoints
+- Runs **database initialization** on application startup
+- Provides a **root endpoint** (`/`) for health check
+
+---
+
+## **Dependencies**
+
+- **`fastapi.FastAPI`** – Core FastAPI application framework.
+- **`app.routers.barangays`** – Contains all routes related to Barangays.
+- **`app.db.init_db`** – Initializes database tables at startup.
+
+---
+
+## **Application Setup**
+
+### **App Initialization**
 
 ```python
-from fastapi import FastAPI
-from app.routers import barangays
-from app.db import init_db
-
 app = FastAPI()
-
-# Register routers
-app.include_router(barangays.router)
-
-# Database initialization on startup
-@app.on_event("startup")
-def on_startup():
-    init_db()
-
-# Root health-check endpoint
-@app.get("/")
-def root():
-    return {"message": "Heat Risk API is running"}
 ```
 
----
+Creates the FastAPI application instance.
 
-### Components
-
-#### `app = FastAPI()`
-
-- Creates the main FastAPI application instance.
-- Used to register routes, events, and middleware.
-
-
----
-### Router Inclusion
+### **Router Registration**
 
 ```python
 app.include_router(barangays.router)
 ```
 
-- Imports and registers the **Barangay router**, making `/barangays` and related endpoints available.
-
+Registers the **Barangays API routes** under the app.  
+All routes with prefix `/barangays` become accessible through this router.
 
 ---
-### Startup Event
+
+## **Event Handlers**
+
+### **`on_startup()`**
 
 ```python
 @app.on_event("startup")
@@ -50,12 +49,14 @@ def on_startup():
     init_db()
 ```
 
-- Runs when the FastAPI application starts.
-- Calls `init_db()` from `db.py` to create tables in the database if they don’t exist.
-
+- Runs **once when the application starts**.
+- Calls `init_db()` to ensure database tables are created before serving requests.
 
 ---
-### Root Endpoint
+
+## **Endpoints**
+
+### **Root Endpoint**
 
 ```python
 @app.get("/")
@@ -63,5 +64,47 @@ def root():
     return {"message": "Heat Risk API is running"}
 ```
 
-- Provides a simple JSON response confirming that the API is online.
-- Useful as a **health-check** endpoint.
+- **Path**: `/`
+- **Method**: `GET`
+- **Response**: JSON message confirming the API is running.
+- **Purpose**: Health-check / sanity check endpoint.
+
+---
+
+## **Example Usage**
+
+### **Run the App**
+
+```bash
+uvicorn main:app --reload
+```
+
+### **Test the Root Endpoint**
+
+```bash
+curl http://127.0.0.1:8000/
+```
+
+**Response:**
+
+```json
+{
+  "message": "Heat Risk API is running"
+}
+```
+
+### **Access Barangays API**
+
+All barangay-related endpoints are available under:
+
+```
+http://127.0.0.1:8000/barangays
+```
+
+---
+
+## **Notes**
+
+- `init_db()` ensures database models are ready without requiring manual setup.
+- Routers make the code modular and maintainable (e.g., you can add more routers later for `users`, `auth`, etc.).
+- The root endpoint doubles as a **status check** to confirm if the service is online.
