@@ -14,12 +14,14 @@ backend/
 │   │── db.py
 │   │── main.py
 │   │── model.py
-│   │── heat_project.
-│── frontend/ 
-│── venv/
+│   │── heat_project.db
 │── .env
 │── .gitignore
 │── DB_design.svg
-│── README.md
 │── requirements.txt
+frontend/ 
+venv/
+.gitignore
+instructions.txt
+README.md
 ```

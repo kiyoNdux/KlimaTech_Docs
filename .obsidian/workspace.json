@@ -4,53 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "72afc5d1b2bc8907",
+        "id": "e60a61e42790982f",
         "type": "tabs",
         "children": [
           {
-            "id": "6d1f0c79dbd9e049",
+            "id": "0d025c7dc070bf25",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "app/db.py.md",
+                "file": "Structure (Latest).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "db.py"
-            }
-          },
-          {
-            "id": "f0c2b3c2659132f1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "app/schemas/barangay.py.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "barangay.py"
-            }
-          },
-          {
-            "id": "1c794737080b14bd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "app/models.py.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "models.py"
+              "title": "Structure (Latest)"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -195,8 +166,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "1c794737080b14bd",
+  "active": "0d025c7dc070bf25",
   "lastOpenFiles": [
+    "README.md",
+    "app/models.py.md",
     "app/routers/barangays.py.md",
     "app/schemas/database.py.md",
     "app/schemas/barangay.py.md",
@@ -205,10 +178,8 @@
     "app/db.py.md",
     "app/main.py.md",
     "Structure (Latest).md",
-    "app/models.py.md",
     "app/routers/barangays.py/`get_barangay` Endpoint.md",
     "app/routers/barangays.py/`get_barangays` Endpoint.md",
-    "README.md",
     "app/scripts",
     "app/utils",
     "app/routers/barangays.py",
