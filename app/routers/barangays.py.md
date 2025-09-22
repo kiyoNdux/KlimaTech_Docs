@@ -53,7 +53,7 @@ Fetches the latest temperature and humidity for a given barangay, calculates the
 - Retrieves detailed information about a specific barangay.
 - Uses the most recent `HeatLog` if it is less than **1 hour old**; otherwise, generates a new one.
 - Returns a `BarangayDetail` object, including:
-    - Current weather (temperature, humidity, heat index, risk level).
+    - Current weather (temperature, humidity, heat index, uv_index, risk level).
     - A sample **daily briefing** with safe/avoid hours and advice.
     - Placeholder for **forecast data** (future implementation).
 

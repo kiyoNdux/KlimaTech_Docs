@@ -57,6 +57,7 @@ class HeatLog(SQLModel, table=True):
     temperature_c: float
     humidity: float
     heat_index_c: float
+    uv_index: Optional[float] = None
     risk_level: str
     recorded_at: datetime = Field(default_factory=datetime.utcnow)
     barangay: Optional["Barangay"] = Relationship(back_populates="heat_logs")
@@ -69,6 +70,7 @@ class HeatLog(SQLModel, table=True):
 - `temperature_c`: Recorded temperature (°C).
 - `humidity`: Recorded humidity (%).
 - `heat_index_c`: Calculated heat index (°C).
+- `uv_index`: Recorded UV Index.
 - `risk_level`: Categorical risk level (e.g., _Safe_, _Caution_, _Danger_).
 - `recorded_at`: Timestamp when the log was recorded (defaults to **current UTC**).
 - `barangay`: Relationship back to the parent `Barangay`.
