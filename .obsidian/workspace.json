@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "app/main.py.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "main.py"
+              "title": "README"
             }
           }
         ],
@@ -183,9 +183,10 @@
   },
   "active": "754c7c1c20978cbe",
   "lastOpenFiles": [
-    "app/models.py.md",
-    "README.md",
     "Structure (Latest).md",
+    "README.md",
+    "app/main.py.md",
+    "app/models.py.md",
     "app/tasks/collector.py.md",
     "app/db.py.md",
     "app/requirements.txt.md",
@@ -193,7 +194,6 @@
     "app/schemas/database.py.md",
     "app/schemas/barangay.py.md",
     "app/routers/barangays.py.md",
-    "app/main.py.md",
     "app/Dockerfile.md",
     "app/scripts/add_barangays.py.md",
     "app/utils/heat_index.py.md",
