@@ -1,52 +1,72 @@
 ## **Overview**
 
-This is the **entry point** of the FastAPI application.  
-It:
-
-- Initializes the **FastAPI app instance**
-- Includes the **Barangays router** for handling API endpoints
-- Runs **database initialization** on application startup
-- Integrates a **background scheduler (APScheduler)** to periodically collect heat data
-- Provides a **root endpoint** (`/`) for health check
+- **Framework**: FastAPI
+- **Scheduler**: APScheduler (for periodic heat data collection)
+- **Database**: Initialized at startup using `init_db()`
+- **Routers**: Modular endpoints for `barangays`, `ml`, and `future_forecast`
+- **Middleware**: Cross-Origin Resource Sharing (CORS) enabled
 
 ---
 
 ## **Dependencies**
 
-- **`fastapi.FastAPI`** – Core FastAPI application framework.
-- **`app.routers.barangays`** – Contains all routes related to Barangays.
-- **`app.db.init_db`** – Initializes database tables at startup.
-- **`app.tasks.collector.collect_heat_data`** – Task function that fetches and saves heat data from Open-Meteo.
-- **`apscheduler.schedulers.background.BackgroundScheduler`** – Scheduler that runs jobs in the background at fixed intervals.
+- `fastapi.FastAPI` – Core FastAPI framework
+- `fastapi.middleware.cors.CORSMiddleware` – Middleware to handle CORS
+- `app.routers.barangays` – Barangay-related API routes
+- `app.routers.ml` – Machine learning–related API routes
+- `app.routers.future_forecast` – Forecast endpoints for heat risk
+- `app.db.init_db` – Initializes the database tables
+- `app.tasks.collector.collect_heat_data` – Background task to fetch and save heat logs
+- `apscheduler.schedulers.background.BackgroundScheduler` – Schedules periodic tasks
 
 ---
 
 ## **Application Setup**
 
-### App Initialization
+### FastAPI App Initialization
 
 ```python
 app = FastAPI()
 scheduler = BackgroundScheduler()
 ```
 
-- Creates the FastAPI application instance.
-- Initializes a background scheduler to manage periodic tasks.
+- Creates the main FastAPI instance `app`.
+- Initializes the background scheduler for periodic jobs.
+
+### Middleware
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+- Enables **CORS** for all origins, methods, headers, and credentials.
+- Ensures the API can be accessed from different frontends.
+
 
 ### Router Registration
 
 ```python
 app.include_router(barangays.router)
+app.include_router(ml.router)
+app.include_router(future_forecast.router)
 ```
 
-Registers the **Barangays API routes** under the app.  
-All routes with prefix `/barangays` become accessible through this router.
+- Registers three modular routers:
+    - `barangays.router`: Handles barangay-level heat data endpoints
+    - `ml.router`: Handles machine learning or prediction endpoints
+    - `future_forecast.router`: Provides future heat risk forecasts
 
 ---
 
 ## **Event Handlers**
 
-### `on_startup()`
+### Startup Event
 
 ```python
 @app.on_event("startup")
@@ -57,12 +77,12 @@ def on_startup():
     print("APScheduler started. Collecting heat data every hour.")
 ```
 
-- Runs **once when the application starts**.
-- Calls `init_db()` to ensure database tables are created.
-- Registers a background job that calls `collect_heat_data()` every **60 minutes**.
-- Starts the APScheduler.
+- Called **once when the application starts**.
+- Initializes the database (`init_db()`).
+- Schedules `collect_heat_data` to run **every 60 minutes**.
+- Starts APScheduler to handle periodic tasks.
 
-### `shutdown_event()`
+### Shutdown Event
 
 ```python
 @app.on_event("shutdown")
@@ -70,8 +90,7 @@ def shutdown_event():
     scheduler.shutdown()
 ```
 
-- Runs when the application shuts down.
-- Gracefully stops the scheduler to avoid dangling background threads.
+- Ensures that APScheduler is cleanly stopped when the app shuts down.
 
 ---
 
@@ -87,23 +106,22 @@ def root():
 
 - **Path**: `/`
 - **Method**: `GET`
-- **Response**: JSON message confirming the API is running.
-- **Purpose**: Health-check / sanity check endpoint.
+- **Response**: JSON confirming the API is running
+- **Purpose**: Health-check / sanity-check endpoint
 
 ---
 
-## **Background Job: Heat Data Collection**
+## **Note**
 
-- **Job Function**: `collect_heat_data`
-- **Interval**: Every **60 minutes**
-- **Purpose**:
-    - Fetches weather data for all barangays
-    - Computes heat index & risk level
-    - Logs results into the database
+- `app/main.py` is the main entry point of the Heat Risk API.
+- Combines **routers**, **middleware**, and **background tasks**.
+- Provides a **root endpoint** for API health checking.
+- Ensures database initialization and automated heat data collection via APScheduler.
+
 
 ---
 
-## **Example Usage**
+## **Usage**
 
 ### Run the App
 
@@ -111,7 +129,7 @@ def root():
 uvicorn app.main:app --reload
 ```
 
-### Test the Root Endpoint
+### Check Root Endpoint
 
 ```bash
 curl http://127.0.0.1:8000/
@@ -124,22 +142,3 @@ curl http://127.0.0.1:8000/
   "message": "Heat Risk API is running"
 }
 ```
-
-### Check Scheduler Logs
-
-When the app starts:
-
-```
-APScheduler started. Collecting heat data every hour.
-```
-
-Every hour, the scheduler will log new heat data entries for each barangay.
-
----
-
-## **Notes**
-
-- `APScheduler` runs jobs **in the same process** as FastAPI.
-- `init_db()` ensures database tables exist before jobs or API requests access them.
-- The background job (`collect_heat_data`) makes the service **self-updating**, without needing manual triggers.
-- More jobs can be scheduled by adding them to the `scheduler` in `on_startup()`.
