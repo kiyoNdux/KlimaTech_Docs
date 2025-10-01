@@ -3,7 +3,7 @@
 - **Framework**: FastAPI
 - **Scheduler**: APScheduler (for periodic heat data collection)
 - **Database**: Initialized at startup using `init_db()`
-- **Routers**: Modular endpoints for `barangays`, `ml`, and `future_forecast`
+- **Routers**: Modular endpoints for `barangays`, `future_forecast`, and `coolspots`
 - **Middleware**: Cross-Origin Resource Sharing (CORS) enabled
 
 ---
@@ -13,8 +13,8 @@
 - `fastapi.FastAPI` – Core FastAPI framework
 - `fastapi.middleware.cors.CORSMiddleware` – Middleware to handle CORS
 - `app.routers.barangays` – Barangay-related API routes
-- `app.routers.ml` – Machine learning–related API routes
 - `app.routers.future_forecast` – Forecast endpoints for heat risk
+- `app.routers.coolspots` – Cool Spot–related API routes
 - `app.db.init_db` – Initializes the database tables
 - `app.tasks.collector.collect_heat_data` – Background task to fetch and save heat logs
 - `apscheduler.schedulers.background.BackgroundScheduler` – Schedules periodic tasks
@@ -33,6 +33,8 @@ scheduler = BackgroundScheduler()
 - Creates the main FastAPI instance `app`.
 - Initializes the background scheduler for periodic jobs.
 
+---
+
 ### Middleware
 
 ```python
@@ -48,19 +50,20 @@ app.add_middleware(
 - Enables **CORS** for all origins, methods, headers, and credentials.
 - Ensures the API can be accessed from different frontends.
 
+---
 
 ### Router Registration
 
 ```python
 app.include_router(barangays.router)
-app.include_router(ml.router)
 app.include_router(future_forecast.router)
+app.include_router(coolspots.router)
 ```
 
 - Registers three modular routers:
     - `barangays.router`: Handles barangay-level heat data endpoints
-    - `ml.router`: Handles machine learning or prediction endpoints
     - `future_forecast.router`: Provides future heat risk forecasts
+    - `coolspots.router`: Manages Cool Spot creation, retrieval, and user reports
 
 ---
 
@@ -81,6 +84,7 @@ def on_startup():
 - Initializes the database (`init_db()`).
 - Schedules `collect_heat_data` to run **every 60 minutes**.
 - Starts APScheduler to handle periodic tasks.
+
 
 ### Shutdown Event
 
@@ -117,7 +121,6 @@ def root():
 - Combines **routers**, **middleware**, and **background tasks**.
 - Provides a **root endpoint** for API health checking.
 - Ensures database initialization and automated heat data collection via APScheduler.
-
 
 ---
 
