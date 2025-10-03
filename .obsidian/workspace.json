@@ -4,109 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "3b7f222c42a7eff1",
+        "id": "25142effded092b3",
         "type": "tabs",
         "children": [
           {
-            "id": "ac892b87346350ca",
+            "id": "87ae0c656e0c94f1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "Frontend/src/components/coolspots/CoolSpotModal.jsx.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
-            }
-          },
-          {
-            "id": "fb18c38243269b29",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Frontend/src/App.jsx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "App.jsx"
-            }
-          },
-          {
-            "id": "6468e3c684757477",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Frontend/src/App.jsx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "App.jsx"
-            }
-          },
-          {
-            "id": "35f81830ccd63788",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Frontend/src/pages/Dashboard.jsx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Dashboard.jsx"
-            }
-          },
-          {
-            "id": "9cf737ed975821f9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Frontend/src/pages/HeatMap.jsx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "HeatMap.jsx"
-            }
-          },
-          {
-            "id": "4cd699491d29c94c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Frontend/src/components/coolspots/AddSpotOnClick.jsx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "AddSpotOnClick.jsx"
-            }
-          },
-          {
-            "id": "43c9b8577344a921",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Frontend/src/components/coolspots/CoolSpotMarker.jsx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "CoolSpotMarker.jsx"
+              "title": "CoolSpotModal.jsx"
             }
           }
-        ],
-        "currentTab": 6
+        ]
       }
     ],
     "direction": "vertical"
@@ -251,10 +166,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "8440dfb7090b98c4",
+  "active": "87ae0c656e0c94f1",
   "lastOpenFiles": [
-    "Frontend/src/components/coolspots/AddSpotOnClick.jsx.md",
     "Frontend/src/components/coolspots/CoolSpotMarker.jsx.md",
+    "Frontend/src/components/coolspots/CoolSpotModal.jsx.md",
+    "Frontend/src/components/coolspots/AddSpotOnClick.jsx.md",
     "Frontend/src/pages/Dashboard.jsx.md",
     "Frontend/src/pages/HeatMap.jsx.md",
     "Frontend/src/components/coolspots",
