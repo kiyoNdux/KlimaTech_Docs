@@ -62,9 +62,23 @@
               "icon": "lucide-file",
               "title": "Dashboard.jsx"
             }
+          },
+          {
+            "id": "9cf737ed975821f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Frontend/src/pages/HeatMap.jsx.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "HeatMap.jsx"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -209,10 +223,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "8440dfb7090b98c4",
+  "active": "9cf737ed975821f9",
   "lastOpenFiles": [
-    "Frontend/src/App.jsx.md",
     "Frontend/src/pages/Dashboard.jsx.md",
+    "Frontend/src/pages/HeatMap.jsx.md",
+    "Frontend/src/App.jsx.md",
     "Frontend/src/main.jsx.md",
     "README.md",
     "Frontend/src/scripts",
