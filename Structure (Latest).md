@@ -3,9 +3,12 @@ backend/
 │── app/
 │   │── routers/
 │   │   │── barangays.py
+│   │   │── coolspots.py
+│   │   │── forecast.py
 │   │── schemas/
 │   │   │── barangay.py
-│   │   │── database.py
+│   │   │── coolspots.py
+│   │   │── heatlogs.py
 │   │── scripts/
 │   │   │── add_barangays.py
 │   │── tasks/

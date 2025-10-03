@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "app/schemas/heatlogs.py.md",
+                "file": "Structure (Latest).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "heatlogs.py"
+              "title": "Structure (Latest)"
             }
           }
         ]
@@ -168,31 +168,33 @@
   },
   "active": "8440dfb7090b98c4",
   "lastOpenFiles": [
-    "app/routers/forecast.py.md",
-    "app/routers/barangays.py.md",
-    "app/main.py.md",
-    "app/utils/heat_index.py.md",
-    "app/schemas/coolspots.py.md",
-    "app/routers/coolspots.py.md",
+    "Frontend",
+    "Backend",
+    "Backend/app/requirements.txt.md",
+    "Backend/app/models.py.md",
+    "Backend/app/main.py.md",
+    "Backend/app/Dockerfile.md",
+    "Backend/app/db.py.md",
+    "Backend/app/schemas/coolspots.py.md",
+    "Backend/app/schemas/heatlogs.py.md",
+    "Backend/app/routers/forecast.py.md",
+    "Backend/app/routers/barangays.py.md",
+    "Backend/app/utils/heat_index.py.md",
+    "Backend/app/routers/coolspots.py.md",
     "README.md",
-    "app/models.py.md",
     "Structure (Latest).md",
-    "app/tasks/collector.py.md",
-    "app/db.py.md",
-    "app/requirements.txt.md",
-    "app/tasks",
-    "app/schemas/heatlogs.py.md",
-    "app/schemas/barangay.py.md",
-    "app/Dockerfile.md",
-    "app/scripts/add_barangays.py.md",
+    "Backend/app/tasks/collector.py.md",
+    "Backend/app/tasks",
+    "Backend/app/schemas/barangay.py.md",
+    "Backend/app/scripts/add_barangays.py.md",
     "app/routers/barangays.py/`get_barangay` Endpoint.md",
     "app/routers/barangays.py/`get_barangays` Endpoint.md",
-    "app/scripts",
-    "app/utils",
+    "Backend/app/scripts",
+    "Backend/app/utils",
     "app/routers/barangays.py",
-    "app/schemas",
-    "app",
-    "app/routers",
+    "Backend/app/schemas",
+    "Backend/app",
+    "Backend/app/routers",
     "Welcome.md"
   ]
 }
